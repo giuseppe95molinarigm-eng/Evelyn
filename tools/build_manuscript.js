@@ -68,12 +68,12 @@ function newNumbering() {
     style: { paragraph: { indent: { left: 540, hanging: 360 } } } }] });
   return ref;
 }
-const P = (text, opts = {}) => new Paragraph({ spacing: { after: 120, line: 288 }, ...opts, children: Array.isArray(text) ? text : [new TextRun(text)] });
+const P = (text, opts = {}) => new Paragraph({ spacing: { after: 100, line: 276 }, ...K(), ...opts, children: Array.isArray(text) ? text : [new TextRun(text)] });
 const labelled = (label, text) => P([new TextRun({ text: label, bold: true }), new TextRun(text)]);
 const H1 = (text, pageBreak = true) => new Paragraph({ heading: HeadingLevel.HEADING_1, pageBreakBefore: pageBreak, children: [new TextRun(text)] });
-const H2 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_2, pageBreakBefore: true, children: [new TextRun(text)] });
-const H3 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_3, children: [new TextRun(text)] });
-const bullet = (text) => new Paragraph({ numbering: { reference: 'bullets', level: 0 }, spacing: { after: 60, line: 276 }, children: [new TextRun(text)] });
+const H2 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 120, after: 120 }, children: [new TextRun(text)] });
+const H3 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_3, ...K(), children: [new TextRun(text)] });
+const bullet = (text) => new Paragraph({ numbering: { reference: 'bullets', level: 0 }, ...K(), spacing: { after: 60, line: 276 }, children: [new TextRun(text)] });
 
 const TABLE_W = 9360;
 function table(rows) {
@@ -107,7 +107,12 @@ function blocks(list) {
   return out;
 }
 
+let KEEP = false;
+const K = () => (KEEP ? { keepNext: true, keepLines: true } : {});
 function recipe(r, isGift) {
+  // Short recipes stay on one page; long ones may continue onto the next page to avoid big gaps.
+  const size = r.ingr.length + r.steps.length * 1.6 + r.extra.reduce((n, e) => n + e.paras.length * 2, 0) + (r.tip ? 2 : 0);
+  KEEP = size <= Number(process.env.KEEP_MAX || 16);
   const out = [H2(r.title)];
   if (r.intro) out.push(P([new TextRun({ text: r.intro, italics: true })]));
   if (r.meta) out.push(P(r.meta.split(' | ').map((m, i) => {
@@ -117,13 +122,13 @@ function recipe(r, isGift) {
   if (r.uses.length) out.push(labelled(r.uses.length > 1 ? 'Uses: ' : 'Uses: ', r.uses.join('; ')));
   out.push(H3(isGift ? 'What You Need' : 'Ingredients'));
   for (const i of r.ingr) {
-    if (i.group) out.push(new Paragraph({ spacing: { before: 120, after: 60 }, keepNext: true, children: [new TextRun({ text: i.group, bold: true, italics: true })] }));
+    if (i.group) out.push(new Paragraph({ spacing: { before: 120, after: 60 }, ...K(), keepNext: true, children: [new TextRun({ text: i.group, bold: true, italics: true })] }));
     else out.push(bullet(i.item));
   }
   if (r.steps.length) {
     out.push(H3(isGift ? 'Filling the Jar' : 'Directions'));
     const ref = newNumbering();
-    r.steps.forEach(s => out.push(new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 100, line: 288 }, children: [new TextRun(s)] })));
+    r.steps.forEach(s => out.push(new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 60, line: 276 }, ...K(), children: [new TextRun(s)] })));
   }
   for (const s of r.extra) {
     if (s.title) out.push(H3(s.title));
@@ -133,6 +138,10 @@ function recipe(r, isGift) {
   }
   if (r.keeps) out.push(labelled('Keeps: ', r.keeps + '.'));
   if (r.tip) out.push(labelled('Tip: ', r.tip));
+  // Paragraphs above were built with KEEP on, so the whole recipe stays on one page;
+  // this spacer (KEEP off) ends the chain so the next recipe can start on the same page.
+  KEEP = false;
+  out.push(new Paragraph({ spacing: { after: 240 }, children: [] }));
   return out;
 }
 
@@ -191,16 +200,25 @@ const mixNames = allRecipes.filter(r => r.keeps).map(r => r.title);
 for (const m of mixNames) {
   const made = allRecipes.filter(r => r.uses.includes(m)).map(r => r.title);
   if (!made.length) continue;
-  children.push(new Paragraph({ spacing: { before: 160, after: 60 }, keepNext: true, children: [new TextRun({ text: m, bold: true })] }));
-  made.forEach(t => children.push(bullet(t)));
+  children.push(new Paragraph({ spacing: { after: 140, line: 276 }, keepLines: true, children: [
+    new TextRun({ text: m + ': ', bold: true }), new TextRun(made.join(' · '))] }));
 }
 // Meal plan, shopping list, conversions
 for (const c of [mealPlan, shopping, conversions]) { children.push(H1(c.title)); children.push(...blocks(c.blocks)); }
 // Recipe index
 children.push(H1('Recipe Index'));
 children.push(P('All 150 recipes in alphabetical order, with the chapter where each one appears.'));
-[...allRecipes].sort((a, b) => a.title.localeCompare(b.title)).forEach(r =>
-  children.push(new Paragraph({ spacing: { after: 40 }, children: [new TextRun(r.title), new TextRun({ text: `  (Chapter ${r.chapter})`, color: '555555' })] })));
+{
+  const sorted = [...allRecipes].sort((a, b) => a.title.localeCompare(b.title));
+  const half = Math.ceil(sorted.length / 2);
+  const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+  const nb = { top: none, bottom: none, left: none, right: none };
+  const cell = r => new TableCell({ width: { size: 4680, type: WidthType.DXA }, borders: nb, margins: { top: 0, bottom: 0, left: 60, right: 120 },
+    children: [new Paragraph({ spacing: { after: 30 }, children: r ? [new TextRun({ text: r.title, size: 19 }), new TextRun({ text: ` (Ch. ${r.chapter})`, size: 17, color: '555555' })] : [] })] });
+  children.push(new Table({ width: { size: 9360, type: WidthType.DXA }, columnWidths: [4680, 4680],
+    borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none },
+    rows: Array.from({ length: half }, (_, i) => new TableRow({ children: [cell(sorted[i]), cell(sorted[i + half])] })) }));
+}
 
 const doc = new Document({
   creator: 'Elite Publishing', title: TITLE,
@@ -212,7 +230,7 @@ const doc = new Document({
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true,
         run: { font: FONT, size: 32, bold: true }, paragraph: { spacing: { before: 0, after: 160 }, keepNext: true, outlineLevel: 1 } },
       { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', quickFormat: true,
-        run: { font: FONT, size: 24, bold: true }, paragraph: { spacing: { before: 200, after: 80 }, keepNext: true, outlineLevel: 2 } },
+        run: { font: FONT, size: 24, bold: true }, paragraph: { spacing: { before: 160, after: 60 }, keepNext: true, outlineLevel: 2 } },
     ],
   },
   numbering: { config: numberingConfig },
