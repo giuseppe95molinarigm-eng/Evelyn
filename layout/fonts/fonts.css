@@ -1,7 +1,10 @@
-@font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 500; src: url('fonts/PlayfairDisplay-500i.ttf') format('truetype'); }
-@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 600; src: url('fonts/PlayfairDisplay-600.ttf') format('truetype'); }
-@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: url('fonts/PlayfairDisplay-700.ttf') format('truetype'); }
-@font-face { font-family: 'Source Sans 3'; font-style: italic; font-weight: 400; src: url('fonts/SourceSans3-400i.ttf') format('truetype'); }
-@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 400; src: url('fonts/SourceSans3-400.ttf') format('truetype'); }
-@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 600; src: url('fonts/SourceSans3-600.ttf') format('truetype'); }
-@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 700; src: url('fonts/SourceSans3-700.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; src: url('fonts/CormorantGaramond-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 600; src: url('fonts/CormorantGaramond-600i.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; src: url('fonts/CormorantGaramond-500.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 600; src: url('fonts/CormorantGaramond-600.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 700; src: url('fonts/CormorantGaramond-700.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: italic; font-weight: 400; src: url('fonts/Jost-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 300; src: url('fonts/Jost-300.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 400; src: url('fonts/Jost-400.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; src: url('fonts/Jost-500.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 600; src: url('fonts/Jost-600.ttf') format('truetype'); }
