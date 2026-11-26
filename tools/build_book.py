@@ -9,7 +9,8 @@ import style_a_modern as A
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LAY = ROOT / "layout"
-OUT_NAME = "The_Complete_Amish_Dry_Mix_Pantry_Cookbook_Interior"
+COMPACT = "--compact" in sys.argv
+OUT_NAME = "The_Complete_Amish_Dry_Mix_Pantry_Cookbook_Interior" + ("_Compact" if COMPACT else "")
 e = html.escape
 TITLE = "The Complete Amish Dry Mix Pantry Cookbook"
 SUBTITLE = ("150 Budget-Friendly Homemade Dry Mixes and Meals from Scratch, with Baking, Soup and Seasoning Blends, "
@@ -75,6 +76,37 @@ table.t td:first-child { font-weight:600; color:var(--green); }
 .opener .mixes .kicker { margin-bottom:8px; display:block; }
 .opener .chips span { display:inline-block; background:var(--cream); border:1px solid #EFE4CC; color:var(--green); font-weight:600; font-size:9.4pt; padding:4px 11px; border-radius:20px; margin:0 6px 7px 0; }
 .blank { }
+/* ---------- compact edition: two recipes per page ---------- */
+.duo .slot { position:absolute; height:4.62in; overflow:hidden; }
+.duo .slot.s1 { top:calc(0.6in + 0.125in); }
+.duo .slot.s2 { top:calc(0.6in + 0.125in + 4.62in + 0.22in); }
+.duo .mid { position:absolute; top:calc(0.6in + 0.125in + 4.62in + 0.11in); height:1px; background:#E3DCCD; }
+.page.right .slot, .page.right .mid { left:0.8in; right:calc(0.6in + 0.125in); }
+.page.left .slot, .page.left .mid { left:calc(0.6in + 0.125in); right:0.8in; }
+.half .top { display:grid; grid-template-columns:2.55in 1fr; column-gap:.24in; margin-bottom:9px; align-items:start; }
+.half .ph { height:1.92in; border-radius:10px; background-size:cover; background-position:center; }
+.half .kicker { font-size:6.6pt; letter-spacing:1.8px; }
+.half .badge { display:table; margin:4px 0 0; }
+.half h1 { font-size:18.5pt; margin:5px 0 4px; line-height:1.1; }
+.half .intro { font-size:9.2pt; line-height:1.35; margin:0 0 7px; }
+.half .meta { margin:0; } .half .meta div { padding:3px 0; } .half .meta span { font-size:8.8pt; } .half .meta b { font-size:6.2pt; }
+.half .cols { grid-template-columns:2.4in 1fr; gap:.22in; font-size:9.1pt; line-height:1.38; }
+.half .ingr { padding:8px 11px 6px; } .half .ingr li { font-size:8.7pt; padding:2px 0 2px 13px; }
+.half .ingr li::before { top:7px; } .half h2 { font-size:11pt; margin-bottom:4px; }
+.half ol.steps li { margin-bottom:5px; padding-left:26px; } .half ol.steps li::before { width:17px; height:17px; line-height:17px; font-size:8pt; }
+.half .box { margin-top:8px; padding:7px 11px; font-size:8.7pt; } .half .keeps { margin-top:7px; font-size:8.7pt; }
+.duo .ohalf .banner { position:absolute; top:0; left:0; right:0; height:calc(2.75in + 0.125in); background-size:cover; background-position:center; }
+.duo .ohalf .banner::after { content:''; position:absolute; left:0; right:0; bottom:0; height:.5in; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff); }
+.duo .ohalf .otext { position:absolute; top:calc(2.72in + 0.125in); }
+.page.right .ohalf .otext { left:0.8in; right:calc(0.6in + 0.125in); } .page.left .ohalf .otext { left:calc(0.6in + 0.125in); right:0.8in; }
+.ohalf .num { font-family:'Playfair Display', serif; font-weight:700; font-size:10.5pt; color:var(--terra); letter-spacing:3px; text-transform:uppercase; }
+.ohalf h1 { font-size:25pt; margin:2px 0 6px; line-height:1.1; }
+.ohalf .lead { font-family:'Playfair Display', serif; font-style:italic; font-weight:500; font-size:10.4pt; line-height:1.45; color:var(--muted); margin:0 0 8px; }
+.ohalf .chips span { display:inline-block; background:var(--cream); border:1px solid #EFE4CC; color:var(--green); font-weight:600; font-size:8.2pt; padding:2px 9px; border-radius:20px; margin:0 5px 5px 0; }
+.duo.withopener .slot.s1 { display:none; }
+.duo.withopener .slot.s2 { top:calc(5.45in + 0.125in); height:4.73in; }
+.duo.withopener .mid { top:calc(5.3in + 0.125in); }
+#pool { display:none; }
 """
 
 # ---------------- page builders ----------------
@@ -82,6 +114,25 @@ def recipe_page(r, ci, ch_title):
     html_ = A.recipe_page(r, ci, ch_title, 0, "right", bool(r["keeps"]))
     html_ = html_.replace('<section class="page right">', f'<section class="page recipe" data-ch="{ci}" data-chtitle="{e(ch_title)}">')
     return html_.split('<div class="folio">')[0] + '<div class="folio"></div>\n</section>'
+
+def half_recipe(r, ci, ch_title):
+    """Compact half-page version of a recipe (smaller photo beside the title)."""
+    full = A.recipe_page(r, ci, ch_title, 0, "right", bool(r["keeps"]))
+    body = full.split('<div class="body">', 1)[1].rsplit('<div class="folio">', 1)[0]
+    body = body.rsplit("</div>", 1)[0]            # drop closing tag of .body
+    head, rest = body.split('<div class="meta">', 1)
+    meta, cols = rest.split("</div>\n<div class=\"cols\">", 1)
+    return (f'<div class="half" data-slug="{r["slug"]}"><div class="top"><div class="ph" style="background-image:url(\'images/{r["slug"]}.jpg\')"></div>'
+            f'<div class="hd">{head}<div class="meta">{meta}</div></div></div><div class="cols">{cols}</div>')
+
+def half_opener(ci, ch):
+    mixes = [r["title"] for r in ch["recipes"] if r["keeps"]]
+    lead = ch["blocks"][0][1] if ch["blocks"] else ""
+    chips = "".join(f"<span>{e(m)}</span>" for m in mixes)
+    return (f'<div class="ohalf" data-ch="{ci}" data-chtitle="{e(ch["title"])}" data-toc="Chapter {ci}: {e(ch["title"])}">'
+            f'<div class="banner" style="background-image:url(\'images/chapter-{ci:02d}.jpg\')"></div>'
+            f'<div class="otext"><div class="num">Chapter {WORDS[ci-1]}</div><h1>{e(ch["title"])}</h1><p class="lead">{e(lead)}</p>'
+            + (f'<div class="chips">{chips}</div>' if mixes else '') + '</div></div>')
 
 def blocks_html(blocks):
     out, ul = [], []
@@ -145,10 +196,18 @@ def build():
     for c in front:
         pages.append(flow(c["title"], "Getting started", blocks_html(c["blocks"])))
     # Chapters
-    for ci, ch in enumerate(chs, 1):
-        pages.append(opener(ci, ch))
-        for r in ch["recipes"]:
-            pages.append(recipe_page(r, ci, ch["title"]))
+    if COMPACT:
+        pool = []
+        for ci, ch in enumerate(chs, 1):
+            pool.append(f'<div class="item" data-kind="opener" data-ch="{ci}">{opener(ci, ch)}{half_opener(ci, ch)}</div>')
+            for r in ch["recipes"]:
+                pool.append(f'<div class="item" data-kind="recipe" data-ch="{ci}">{recipe_page(r, ci, ch["title"])}{half_recipe(r, ci, ch["title"])}</div>')
+        pages.append('<div id="pool">' + "".join(pool) + "</div>")
+    else:
+        for ci, ch in enumerate(chs, 1):
+            pages.append(opener(ci, ch))
+            for r in ch["recipes"]:
+                pages.append(recipe_page(r, ci, ch["title"]))
     # Back matter: shelf-life chart
     b = ['<p>Use this chart to check how long each mix keeps. Times are for best quality when the mix is stored in an airtight container in a cool, dry, dark place. Mixes that contain fat, whole grains or dairy powders keep longer when refrigerated or frozen.</p>']
     for ci, ch in enumerate(chs, 1):

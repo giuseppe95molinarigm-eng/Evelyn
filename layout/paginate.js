@@ -5,6 +5,65 @@
   const BOOK = 'THE COMPLETE AMISH DRY MIX PANTRY COOKBOOK';
   const report = { overflow: [], shrunk: [] };
 
+  // 0. Compact edition: pair consecutive items that fit in half a page.
+  const pool = document.getElementById('pool');
+  if (pool) {
+    const items = [...pool.querySelectorAll(':scope > .item')];
+    // measure each half version in a test page
+    const test = document.createElement('section');
+    test.className = 'page duo right'; test.innerHTML = '<div class="slot s2"></div>';
+    pool.parentNode.insertBefore(test, pool);
+    const slot = test.querySelector('.slot');
+    const hgt = el => { const l = el.lastElementChild; return l ? l.offsetTop + l.offsetHeight - el.offsetTop : 0; };
+    const fits = items.map(it => {
+      const h = it.querySelector('.half'); if (!h) return true; // openers always can go half
+      slot.innerHTML = ''; slot.appendChild(h);
+      const ok = () => slot.scrollHeight <= slot.clientHeight + 1;
+      if (!ok()) { // balance: move side boxes under the directions
+        const [c1, c2] = h.querySelectorAll('.cols > div');
+        const boxes = [...c1.querySelectorAll(':scope > .box')];
+        if (boxes.length) {
+          const before = Math.max(hgt(c1), hgt(c2)), anchor = c2.querySelector('.keeps, .box.tip');
+          boxes.forEach(b => c2.insertBefore(b, anchor));
+          if (Math.max(hgt(c1), hgt(c2)) >= before) boxes.forEach(b => c1.appendChild(b));
+        }
+      }
+      const ph = h.querySelector('.ph');
+      for (let ht = 1.92; !ok() && ht > 1.55; ht -= 0.06) ph.style.height = ht + 'in';
+      const res = ok();
+      it.appendChild(h);
+      return res;
+    });
+    test.remove();
+    const out = [];
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i], nx = items[i + 1];
+      const pairable = nx && nx.dataset.kind === 'recipe' && nx.dataset.ch === it.dataset.ch && fits[i] && fits[i + 1];
+      if (pairable) {
+        const pg = document.createElement('section');
+        if (it.dataset.kind === 'opener') {
+          const oh = it.querySelector('.ohalf');
+          pg.className = 'page duo withopener';
+          pg.dataset.toc = oh.dataset.toc; pg.dataset.ch = oh.dataset.ch; pg.dataset.chtitle = oh.dataset.chtitle;
+          pg.innerHTML = '<div class="slot s1"></div><div class="mid"></div><div class="slot s2"></div><div class="folio"></div>';
+          pg.insertBefore(oh, pg.firstChild);
+        } else {
+          pg.className = 'page duo recipe2';
+          pg.dataset.ch = it.dataset.ch;
+          pg.innerHTML = '<div class="slot s1"></div><div class="mid"></div><div class="slot s2"></div><div class="folio"></div>';
+          pg.querySelector('.s1').appendChild(it.querySelector('.half'));
+        }
+        pg.querySelector('.s2').appendChild(nx.querySelector('.half'));
+        out.push(pg); i++;
+      } else {
+        out.push(it.querySelector('section.page'));
+      }
+    }
+    out.forEach(pg => pool.parentNode.insertBefore(pg, pool));
+    pool.remove();
+    report.paired = out.filter(p => p.classList.contains('duo')).length;
+  }
+
   // 1. Expand flowing sections into as many pages as needed.
   for (const tpl of [...document.querySelectorAll('template.flowsec')]) {
     const blocks = JSON.parse(tpl.innerHTML.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#x27;/g, "'").replace(/&amp;/g, '&'));
@@ -54,9 +113,10 @@
     if (p.dataset.toc) where[p.dataset.toc] = n;
     const slugEl = p.querySelector('.photo');
     if (slugEl) { const m = slugEl.style.backgroundImage.match(/images\/(.*)\.jpg/); if (m) where['r:' + m[1]] = n; }
+    p.querySelectorAll('.half[data-slug]').forEach(h => { where['r:' + h.dataset.slug] = n; });
     const f = p.querySelector('.folio');
-    if (!f || p.dataset.nofolio || p.classList.contains('opener')) { if (f) f.innerHTML = ''; return; }
-    f.innerHTML = n % 2 ? `${BOOK}<span class="n">${n}</span>` : `<span class="n">${n}</span>${(p.classList.contains('recipe') ? 'CHAPTER ' + p.dataset.ch + ' · ' + chTitle : 'THE COMPLETE AMISH DRY MIX PANTRY COOKBOOK').toUpperCase()}`;
+    if (!f || p.dataset.nofolio || p.classList.contains('opener') || p.classList.contains('withopener')) { if (f) f.innerHTML = ''; return; }
+    f.innerHTML = n % 2 ? `${BOOK}<span class="n">${n}</span>` : `<span class="n">${n}</span>${((p.classList.contains('recipe') || p.classList.contains('recipe2') || p.classList.contains('withopener')) ? 'CHAPTER ' + p.dataset.ch + ' · ' + chTitle : 'THE COMPLETE AMISH DRY MIX PANTRY COOKBOOK').toUpperCase()}`;
   });
 
   // 3. Recipe pages: shrink the photo, then the type, until the recipe fits its page.
@@ -93,6 +153,7 @@
   document.querySelectorAll('[data-ref]').forEach(s => { s.textContent = where['r:' + s.dataset.ref] || '?'; });
 
   report.pages = pages.length;
+  report.halfOverflow = [...document.querySelectorAll('.duo .slot')].filter(s => s.scrollHeight > s.clientHeight + 1).length;
   window.__report = report;
   window.__paginated = true;
 })();
