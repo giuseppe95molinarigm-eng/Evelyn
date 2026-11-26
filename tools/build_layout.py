@@ -126,8 +126,8 @@ def recipe_page(r, ch_no, ch_title, page_no, side):
 <div class="folio">{folio}</div>
 </section>"""
 
-def render(name, pages):
-    doc = f"<!doctype html><html><head><meta charset='utf-8'><title>{html.escape(BOOK)}</title><style>{CSS}</style></head><body>{''.join(pages)}</body></html>"
+def render(name, pages, css=None):
+    doc = f"<!doctype html><html><head><meta charset='utf-8'><title>{html.escape(BOOK)}</title><style>{css or CSS}</style></head><body>{''.join(pages)}</body></html>"
     out = LAY / f"{name}.html"
     out.write_text(doc)
     js = f"""const {{ chromium }} = require('playwright');
@@ -139,7 +139,7 @@ console.log('overflow per page:', JSON.stringify(ov)); await b.close(); }})();""
     subprocess.run(["node", "-e", js], check=True)
     print("wrote", LAY / (name + ".pdf"))
 
-def build_sample():
+def build_sample(name="Sample_Pages"):
     chs = R.chapters()
     sel = [(1, "All-Purpose Amish Baking Mix"), (1, "Strawberry Shortcake Biscuits")]
     pages = []
@@ -147,7 +147,7 @@ def build_sample():
         ch = chs[ci - 1]
         r = next(x for x in ch["recipes"] if x["title"] == title)
         pages.append(recipe_page(r, ci, ch["title"], 10 + i, "left" if i % 2 == 0 else "right"))
-    render("Sample_Pages", pages)
+    render(name, pages)
 
 if __name__ == "__main__":
-    build_sample()
+    build_sample(sys.argv[1] if len(sys.argv) > 1 else "Sample_Pages")

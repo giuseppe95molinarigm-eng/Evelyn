@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset='utf-8'><title>The Complete Amish Dry Mix Pantry Cookbook</title><style>@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; src: url('../fonts/CormorantGaramond-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 600; src: url('../fonts/CormorantGaramond-600i.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; src: url('../fonts/CormorantGaramond-500.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 600; src: url('../fonts/CormorantGaramond-600.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 700; src: url('../fonts/CormorantGaramond-700.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: italic; font-weight: 400; src: url('../fonts/Jost-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 300; src: url('../fonts/Jost-300.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 400; src: url('../fonts/Jost-400.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; src: url('../fonts/Jost-500.ttf') format('truetype'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 600; src: url('../fonts/Jost-600.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 500; src: url('../fonts/PlayfairDisplay-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 600; src: url('../fonts/PlayfairDisplay-600.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: url('../fonts/PlayfairDisplay-700.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: italic; font-weight: 400; src: url('../fonts/SourceSans3-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 400; src: url('../fonts/SourceSans3-400.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 600; src: url('../fonts/SourceSans3-600.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 700; src: url('../fonts/SourceSans3-700.ttf') format('truetype'); }
+@font-face { font-family: 'DM Serif Display'; font-style: italic; font-weight: 400; src: url('../fonts/DMSerifDisplay-400i.ttf') format('truetype'); }
+@font-face { font-family: 'DM Serif Display'; font-style: normal; font-weight: 400; src: url('../fonts/DMSerifDisplay-400.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 400; src: url('../fonts/Lora-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 500; src: url('../fonts/Lora-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 400; src: url('../fonts/Lora-400.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 500; src: url('../fonts/Lora-500.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 600; src: url('../fonts/Lora-600.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 700; src: url('../fonts/Lora-700.ttf') format('truetype'); }
+
+@page { size: 8.625in 11.25in; margin: 0; }
+:root { --ink:#2A2622; --red:#8C3B2E; --indigo:#2F3E5C; --mustard:#C3923A; --muted:#756C62; --rule:#D8CDBB; --paper:#FCF9F3; --wash:#F3ECDF; }
+* { box-sizing:border-box; }
+html,body { margin:0; }
+body { font-family:'Lora','Jost',serif; color:var(--ink); font-size:9.9pt; line-height:1.52; font-variant-numeric:lining-nums; }
+.page { width:8.625in; height:11.25in; position:relative; overflow:hidden; background:var(--paper); page-break-after:always; }
+.page:last-child { page-break-after:auto; }
+.page { --acc:var(--red); } .page.mix { --acc:var(--indigo); }
+/* quilt-stripe band on the outside edge (bleeds) */
+.band { position:absolute; top:0; bottom:0; width:calc(0.16in + 0.125in); background:var(--acc); }
+.band::after { content:''; position:absolute; top:0; bottom:0; width:1.2pt; background:var(--mustard); }
+.page.left .band { left:0; } .page.right .band { right:0; }
+.page.left .band::after { right:-4pt; } .page.right .band::after { left:-4pt; }
+.page.right .area, .page.right .folio { left:.85in; right:calc(.7in + .125in); }
+.page.left  .area, .page.left  .folio { left:calc(.7in + .125in); right:.85in; }
+.area { position:absolute; top:calc(.6in + .125in); bottom:calc(.95in + .125in); display:grid; grid-template-columns:2.85in 1fr; column-gap:.34in; grid-template-rows:auto 1fr; }
+.arch { width:2.85in; height:4.15in; border-radius:1.425in 1.425in 6px 6px; background-size:cover; background-position:center; box-shadow:0 0 0 1pt var(--paper), 0 0 0 2pt var(--acc); }
+.head { display:flex; flex-direction:column; justify-content:flex-end; padding-bottom:4px; position:relative; }
+.seal { position:absolute; top:0; right:0; width:.95in; height:.95in; border-radius:50%; border:1.2pt solid var(--acc); display:flex; align-items:center; justify-content:center; text-align:center;
+  font-weight:700; font-size:6.4pt; letter-spacing:.22em; text-transform:uppercase; color:var(--acc); line-height:1.5; }
+.seal::before { content:''; position:absolute; inset:3px; border-radius:50%; border:.6pt solid var(--acc); }
+.seal b { display:block; font-family:'DM Serif Display',serif; font-weight:400; font-size:17pt; letter-spacing:0; line-height:1; }
+.chap { font-weight:600; font-size:7pt; letter-spacing:.24em; text-transform:uppercase; color:var(--acc); }
+h1 { font-family:'DM Serif Display',serif; font-weight:400; font-size:32pt; line-height:1.04; margin:8px 0 10px; color:var(--ink); }
+.orn { display:flex; align-items:center; gap:8px; margin:0 0 10px; color:var(--mustard); }
+.orn::before, .orn::after { content:''; height:.7pt; background:var(--mustard); flex:0 0 .45in; }
+.orn span { font-size:8pt; }
+.intro { font-style:italic; font-size:11pt; line-height:1.45; color:var(--muted); margin:0 0 12px; }
+.facts { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; border-top:.7pt solid var(--rule); border-bottom:.7pt solid var(--rule); }
+.facts div { padding:6px 0 6px 10px; border-left:.7pt solid var(--rule); }
+.facts div:first-child { border-left:0; padding-left:0; }
+.facts b { display:block; font-weight:600; font-size:6.4pt; letter-spacing:.22em; text-transform:uppercase; color:var(--acc); }
+.facts span { font-family:'DM Serif Display',serif; font-size:12pt; }
+.made { margin-top:9px; font-size:8.6pt; color:var(--muted); font-style:italic; }
+.made b { font-style:normal; font-weight:600; color:var(--acc); }
+
+.side { grid-row:2; margin-top:.36in; }
+.main { grid-row:2; margin-top:.36in; }
+h2 { font-family:'DM Serif Display',serif; font-weight:400; font-size:15pt; color:var(--acc); margin:0 0 6px; display:flex; align-items:center; gap:10px; }
+h2::after { content:''; flex:1; height:.7pt; background:var(--rule); }
+.ingbox { background:var(--wash); padding:12px 14px 10px; border-radius:2px; }
+.ing { list-style:none; margin:0; padding:0; }
+.ing li { padding:3.2px 0; font-size:9.3pt; line-height:1.35; border-bottom:.5pt dashed #CDBFA8; }
+.ing li:last-child { border-bottom:0; }
+.ing .q { font-weight:700; color:var(--ink); margin-right:4px; }
+.grp { font-weight:600; font-size:6.8pt; letter-spacing:.2em; text-transform:uppercase; color:var(--acc); margin:8px 0 1px; }
+.grp:first-child { margin-top:0; }
+ol.steps { margin:0; padding:0; list-style:none; }
+ol.steps li { position:relative; padding-left:.4in; margin-bottom:10px; }
+ol.steps li span { position:absolute; left:0; top:-1px; width:.25in; height:.25in; border:1pt solid var(--acc); transform:rotate(45deg) scale(.82); display:flex; align-items:center; justify-content:center; }
+ol.steps li span i { transform:rotate(-45deg); font-style:normal; font-family:'DM Serif Display',serif; font-size:11pt; color:var(--acc); }
+.use { margin-top:12px; border:1pt solid var(--acc); padding:9px 12px; font-size:8.8pt; line-height:1.45; position:relative; }
+.use h3 { position:absolute; top:-8px; left:10px; background:var(--paper); padding:0 6px; margin:0; font-weight:600; font-size:6.8pt; letter-spacing:.22em; text-transform:uppercase; color:var(--acc); }
+.use p { margin:0 0 4px; } .use p:last-child { margin:0; }
+.keeps { margin-top:10px; font-size:8.8pt; } .keeps b { font-weight:600; font-size:6.6pt; letter-spacing:.22em; text-transform:uppercase; color:var(--mustard); margin-right:6px; }
+.note { margin-top:10px; font-size:8.8pt; font-style:italic; color:var(--muted); }
+.note b { font-style:normal; font-weight:600; font-size:6.6pt; letter-spacing:.22em; text-transform:uppercase; color:var(--mustard); margin-right:6px; }
+.folio { position:absolute; bottom:calc(.5in + .125in); display:flex; justify-content:space-between; align-items:center; font-size:6.6pt; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); }
+.folio .n { font-family:'DM Serif Display',serif; font-size:12pt; letter-spacing:0; color:var(--acc); }
+</style></head><body><section class="page left mix"><div class="band"></div>
+<div class="area">
+<div class="arch" style="background-image:url('../images/all-purpose-amish-baking-mix.jpg')"></div>
+<div class="head"><div class="seal"><div>Pantry<b>No. 1</b>Mix</div></div>
+<div class="chap">Chapter One</div>
+<h1>All-Purpose Amish Baking Mix</h1>
+<div class="orn"><span>✦</span></div>
+<p class="intro">This is the mix you will reach for most often. With the fat already cut into the flour, a batch of biscuits is only a stir and a few minutes in the oven away.</p>
+<div class="facts"><div><b>Makes</b><span>about 10 cups</span></div><div><b>Prep</b><span>15 minutes</span></div></div>
+</div>
+<div class="side"><div class="ingbox"><h2>Ingredients</h2><ul class="ing"><li><span class="q">8 cups</span>all-purpose flour</li><li><span class="q">¼ cup</span>baking powder</li><li><span class="q">2 tbsp</span>granulated sugar</li><li><span class="q">1 tbsp</span>salt</li><li><span class="q">1⅓ cups</span>vegetable shortening</li></ul></div><div class="use"><h3>How to Use</h3><p>For 9 drop biscuits: stir 2¼ cups mix with ⅔ cup milk until a soft dough forms. Drop onto a baking sheet and bake at 450 °F for 8–10 minutes.</p><p>To measure, spoon the mix lightly into the cup and level it off. Never scoop straight from the jar, or the biscuits will be dry.</p></div></div>
+<div class="main"><h2>Method</h2><ol class="steps"><li><span><i>1</i></span>In a very large bowl, whisk together the flour, baking powder, sugar and salt until evenly combined.</li><li><span><i>2</i></span>Add the shortening in spoonfuls. Cut it in with a pastry blender, two forks or your fingertips until the mixture looks like coarse crumbs with no pieces larger than a small pea.</li><li><span><i>3</i></span>Spoon the mix into clean, dry airtight jars or containers without packing it down. Label with the name and date.</li></ol><div class="keeps"><b>Keeps</b>Pantry up to 6 weeks; refrigerator up to 3 months; freezer up to 6 months</div><div class="note"><b>Pantry note</b>Shortening keeps longer on the shelf than butter. If you prefer an all-butter mix, store it in the refrigerator and use it within 1 month.</div></div>
+</div>
+<div class="folio"><span class="n">10</span><span>Biscuit &amp; All-Purpose Baking Mixes</span></div>
+</section><section class="page right"><div class="band"></div>
+<div class="area">
+<div class="arch" style="background-image:url('../images/strawberry-shortcake-biscuits.jpg')"></div>
+<div class="head">
+<div class="chap">Chapter One</div>
+<h1>Strawberry Shortcake Biscuits</h1>
+<div class="orn"><span>✦</span></div>
+<p class="intro">Sweet, tender shortcakes with juicy sugared strawberries and a cloud of whipped cream: the taste of early summer.</p>
+<div class="facts"><div><b>Serves</b><span>6</span></div><div><b>Prep</b><span>20 minutes</span></div><div><b>Cook</b><span>12 minutes</span></div></div><div class="made"><b>Made with</b> All-Purpose Amish Baking Mix</div>
+</div>
+<div class="side"><div class="ingbox"><h2>Ingredients</h2><div class="grp">For the strawberries</div><ul class="ing"><li><span class="q">1 quart</span>fresh strawberries, hulled and sliced</li><li><span class="q">¼ cup</span>granulated sugar</li></ul><div class="grp">For the shortcakes</div><ul class="ing"><li><span class="q">2⅓ cups</span>All-Purpose Amish Baking Mix</li><li><span class="q">3 tbsp</span>granulated sugar, plus more for sprinkling</li><li><span class="q">3 tbsp</span>melted butter</li><li><span class="q">½ cup</span>milk</li></ul><div class="grp">To serve</div><ul class="ing"><li>Sweetened whipped cream</li></ul></div></div>
+<div class="main"><h2>Directions</h2><ol class="steps"><li><span><i>1</i></span>Toss the strawberries with ¼ cup sugar and let stand for at least 20 minutes, until juicy.</li><li><span><i>2</i></span>Heat the oven to 425 °F and line a baking sheet with parchment paper.</li><li><span><i>3</i></span>Stir the baking mix, 3 tablespoons sugar, melted butter and milk until a soft dough forms.</li><li><span><i>4</i></span>Drop into 6 mounds on the baking sheet and sprinkle with a little sugar.</li><li><span><i>5</i></span>Bake for 10–12 minutes, until golden. Cool slightly.</li><li><span><i>6</i></span>Split each shortcake, fill with strawberries and juice, and top with whipped cream.</li></ol></div>
+</div>
+<div class="folio"><span>The Complete Amish Dry Mix Pantry Cookbook</span><span class="n">11</span></div>
+</section></body></html>

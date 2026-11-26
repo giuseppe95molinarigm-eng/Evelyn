@@ -8,3 +8,18 @@
 @font-face { font-family: 'Jost'; font-style: normal; font-weight: 400; src: url('fonts/Jost-400.ttf') format('truetype'); }
 @font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; src: url('fonts/Jost-500.ttf') format('truetype'); }
 @font-face { font-family: 'Jost'; font-style: normal; font-weight: 600; src: url('fonts/Jost-600.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 500; src: url('fonts/PlayfairDisplay-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 600; src: url('fonts/PlayfairDisplay-600.ttf') format('truetype'); }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: url('fonts/PlayfairDisplay-700.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: italic; font-weight: 400; src: url('fonts/SourceSans3-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 400; src: url('fonts/SourceSans3-400.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 600; src: url('fonts/SourceSans3-600.ttf') format('truetype'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 700; src: url('fonts/SourceSans3-700.ttf') format('truetype'); }
+@font-face { font-family: 'DM Serif Display'; font-style: italic; font-weight: 400; src: url('fonts/DMSerifDisplay-400i.ttf') format('truetype'); }
+@font-face { font-family: 'DM Serif Display'; font-style: normal; font-weight: 400; src: url('fonts/DMSerifDisplay-400.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 400; src: url('fonts/Lora-400i.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 500; src: url('fonts/Lora-500i.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 400; src: url('fonts/Lora-400.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 500; src: url('fonts/Lora-500.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 600; src: url('fonts/Lora-600.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 700; src: url('fonts/Lora-700.ttf') format('truetype'); }
