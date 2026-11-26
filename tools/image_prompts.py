@@ -82,7 +82,7 @@ PROMPTS = {
 "Ham and Cheese Stromboli": "A golden ham and cheese stromboli sliced to show spiral layers of ham and melted cheese, a small bowl of pizza sauce",
 "Amish Cinnamon Rolls": "Big soft cinnamon rolls with swirls of cinnamon and thick cream cheese icing melting over them, in a baking pan, one on a plate",
 "Soft Pretzels": "Golden brown soft pretzels with coarse salt on parchment, a small bowl of mustard",
-"Pull-Apart Monkey Bread": "Sticky caramelized cinnamon monkey bread on a cake plate, a few gooey pieces pulled away",
+"Pull-Apart Monkey Bread": "Monkey bread made of many small round sticky dough balls coated in caramel and cinnamon sugar, on a cake plate, several individual gooey balls pulled away and resting beside it",
 # ---------- Chapter 6 ----------
 "Cream Soup Base Mix (Condensed Soup Substitute)": f"Homemade cream soup base mix, a creamy white powder with flecks of dried herbs and onion, {JAR}, a measuring cup, a small saucepan of creamy sauce in the soft-focus background",
 "Chicken-Style Bouillon Powder": f"Homemade golden yellow bouillon powder with flecks of herbs, {JAR}, a wooden spoon of the powder, a cup of golden broth",
@@ -157,7 +157,7 @@ PROMPTS = {
 "Buttermilk Pancakes in a Jar": "A quart mason jar of pancake mix tied with gingham ribbon and a blank tag, a small glass bottle of maple syrup beside it, a stack of pancakes in the background",
 "Honey Cornbread in a Jar": "A quart mason jar with layers of yellow cornmeal, white milk powder, sugar and flour, tied with twine and a blank tag, a small jar of honey beside it",
 "Friendship Soup in a Jar": "A quart mason jar with colorful layers of green split peas, brown bouillon powder, barley, lentils, dried onion, white rice and a small bag of alphabet pasta on top, tied with twine and a blank tag",
-"Chicken Noodle Soup in a Jar": "A quart mason jar with seasoning and dried vegetables at the bottom and wide egg noodles on top, tied with ribbon and a blank tag, a bay leaf",
+"Chicken Noodle Soup in a Jar": "A quart mason jar filled mostly with golden wide egg noodles, with a thin layer of dried carrot flakes and herbs at the bottom, tied with ribbon and a blank tag, a bay leaf",
 "Nine-Bean Soup in a Jar": "A pint mason jar with colorful layers of nine kinds of dried beans and lentils, tied with twine and a blank tag, a small seasoning bag",
 "Layered Hot Cocoa in a Jar": "A quart mason jar with layers of white milk powder, dark cocoa, sugar, chocolate chips and mini marshmallows on top, tied with red ribbon and a blank tag, two mugs beside it",
 "Cappuccino Mix in a Jar": "A quart mason jar filled with light brown cappuccino mix powder, tied with ribbon and a blank tag, a cup of frothy cappuccino with cinnamon",
@@ -167,7 +167,7 @@ PROMPTS = {
 
 # Chapter opener images (overhead/wide scenes)
 CHAPTERS = {
-1: "A rustic farmhouse table seen from above with a jar of baking mix, a tray of golden biscuits, a rolling pin, a biscuit cutter and a dusting of flour",
+1: "A generous overhead spread on a light wooden table: a big tray of golden fluffy biscuits, a skillet chicken pot pie with biscuit topping, a plate of strawberry shortcakes, a glass jar of baking mix, a rolling pin and a dusting of flour",
 2: "A breakfast table seen from above with a stack of pancakes, golden waffles, a bowl of baked oatmeal with berries, maple syrup and jars of pancake mix",
 3: "A table seen from above with a skillet of cornbread, a loaf of banana bread, blueberry muffins on a cooling rack and jars of quick bread mix",
 4: "A dessert table seen from above with a chocolate sheet cake, whoopie pies, fudgy brownies, sugar cookies and jars of cake mix",
