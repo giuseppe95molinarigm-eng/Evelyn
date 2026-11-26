@@ -82,7 +82,7 @@ def page(r, ch_no, ch_title, n, side, mix_no):
     use = "".join(f'<div class="use"><h3>{t(s["title"])}</h3>' + "".join(f"<p>{t(p)}</p>" for p in s["paras"]) + "</div>" for s in r["extra"])
     keeps = f'<div class="keeps"><b>Keeps</b>{t(r["keeps"])}</div>' if r["keeps"] else ""
     note = f'<div class="note"><b>Pantry note</b>{t(r["tip"])}</div>' if r["tip"] else ""
-    seal = f'<div class="seal"><div>Pantry<b>No. {mix_no}</b>Mix</div></div>' if is_mix else ""
+    seal = ""
     made = f'<div class="made"><b>Made with</b> {t(", ".join(r["uses"]))}</div>' if r["uses"] else ""
     left = f'<span class="n">{n}</span><span>{t(ch_title)}</span>'
     right = f'<span>{t(BOOK)}</span><span class="n">{n}</span>'
@@ -90,7 +90,7 @@ def page(r, ch_no, ch_title, n, side, mix_no):
 <div class="area">
 <div class="arch" style="background-image:url('images/{r['slug']}.jpg')"></div>
 <div class="head">{seal}
-<div class="chap">Chapter {WORDS[ch_no-1]}</div>
+<div class="chap">{'Pantry Mix &nbsp;·&nbsp; ' if is_mix else ''}Chapter {WORDS[ch_no-1]}</div>
 <h1>{t(r['title'])}</h1>
 <div class="orn"><span>✦</span></div>
 <p class="intro">{t(r['intro'])}</p>
