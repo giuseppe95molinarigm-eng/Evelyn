@@ -19,6 +19,12 @@ def parse(path):
             ch["recipes"].append(rec); sec = None; continue
         if rec is None:
             if l.startswith("* "): ch["blocks"].append(("p", l[2:]))
+            elif l.startswith("### "): ch["blocks"].append(("h3", l[4:]))
+            elif l.startswith("- "): ch["blocks"].append(("li", l[2:]))
+            elif l.startswith("|"):
+                cells = [c.strip() for c in l.strip("|").split("|")]
+                if ch["blocks"] and ch["blocks"][-1][0] == "table": ch["blocks"][-1][1].append(cells)
+                else: ch["blocks"].append(("table", [cells]))
             continue
         if l.startswith("> "): rec["intro"] = l[2:]
         elif l.startswith("@ "): rec["meta"] = [tuple(m.split(": ", 1)) for m in l[2:].split(" | ")]
@@ -35,3 +41,6 @@ def parse(path):
 
 def chapters():
     return [parse(p)[0] for p in sorted(DIR.glob("[0-9][0-9].md"))]
+
+def front(): return parse(DIR / "00_front.md")
+def back(): return parse(DIR / "99_back.md")

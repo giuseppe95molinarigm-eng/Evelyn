@@ -31,10 +31,8 @@ def run(url, payload):
         raise SystemExit(f"prediction {p['status']}: {p.get('error')}")
     return p["output"]
 
-def main():
-    slug, subject = sys.argv[1], sys.argv[2]
-    seed = int(sys.argv[sys.argv.index("--seed") + 1]) if "--seed" in sys.argv else None
-    inp = {"prompt": f"{subject}. {STYLE}", "aspect_ratio": "4:3", "output_format": "png",
+def generate(slug, subject, aspect="4:3", seed=None):
+    inp = {"prompt": f"{subject}. {STYLE}", "aspect_ratio": aspect, "output_format": "png",
            "num_inference_steps": 28, "guidance": 3, "go_fast": False}
     if seed is not None: inp["seed"] = seed
     out = run(f"{API}/models/black-forest-labs/flux-dev/predictions", {"input": inp})
@@ -50,7 +48,8 @@ def main():
     jpg = OUT / f"{slug}.jpg"
     Image.open(png).convert("RGB").save(jpg, quality=92, dpi=(300, 300))
     png.unlink()
-    print(jpg, Image.open(jpg).size)
+    return jpg
 
 if __name__ == "__main__":
-    main()
+    seed = int(sys.argv[sys.argv.index("--seed") + 1]) if "--seed" in sys.argv else None
+    print(generate(sys.argv[1], sys.argv[2], seed=seed))
